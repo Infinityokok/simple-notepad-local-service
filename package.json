@@ -1,0 +1,25 @@
+{
+  "name": "simple-notepad-local-service",
+  "version": "1.0.0",
+  "description": "A server that provides a local notepad to the user that can be accessed offline.",
+  "main": "notepad.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Infinityokok/simple-notepad-local-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Infinityokok/simple-notepad-local-service/issues"
+  },
+  "homepage": "https://github.com/Infinityokok/simple-notepad-local-service#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
