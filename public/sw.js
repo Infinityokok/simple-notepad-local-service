@@ -1,40 +1,23 @@
 const CACHE_NAME = 'local-notepad-v1';
 const ASSETS = [
-    './',
-    './index.html',
-    './notepad.css',
-    './notepad.js',
-    './favicon.ico'
+    '/',               // This matches your app.get('/')
+    '/notepad.css',    // Ensure these are in the 'public' folder
+    '/notepad.js',
+    '/favicon.ico'     // Remove this line if you don't have a favicon file!
 ];
 
-// Install Event: Caching the assets
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            console.log('Caching shell assets');
-            return cache.addAll(ASSETS);
-        })
-    );
-});
-
-// Activate Event: Cleaning up old caches
-self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((keys) => {
+            console.log('Installing new worker...');
+            // We use map to catch which specific file fails
             return Promise.all(
-                keys.filter(key => key !== CACHE_NAME)
-                    .map(key => caches.delete(key))
+                ASSETS.map(url => {
+                    return cache.add(url).catch(err => {
+                        console.error(`Failed to cache: ${url}`, err);
+                    });
+                })
             );
-        })
-    );
-});
-
-// Fetch Event: Serving cached content when offline
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then((response) => {
-            // Return the cached file if found, otherwise fetch from network
-            return response || fetch(event.request);
         })
     );
 });
